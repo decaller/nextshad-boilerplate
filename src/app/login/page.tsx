@@ -1,12 +1,18 @@
 import Image from "next/image"
 import Link from "next/link"
 import { signIn } from "@/auth"
+import { auth } from "@/auth"
+
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 
-export default function Page() {
+export default async function Page() {
+
+  const session = await auth()
+
   return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
       <div className="flex items-center justify-center py-12">
@@ -28,6 +34,10 @@ export default function Page() {
                 Login with Google
               </Button>
             </form>
+            {/* <Button onClick={() => signIn()} variant="outline" className="w-full">
+              Login with Google
+            </Button> */}
+            <Textarea placeholder={JSON.stringify(session, null, 2)} />
           </div>
         </div>
       </div>
