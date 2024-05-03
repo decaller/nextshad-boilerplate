@@ -1,55 +1,47 @@
-import Image from "next/image"
-import Link from "next/link"
-import { signIn } from "@/auth"
-import { auth } from "@/auth"
-
-
 import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+
+import { signIn } from "@/auth"
+import { auth } from "@/auth"
 
 export default async function Page() {
 
   const session = await auth()
 
   return (
-    <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-      <div className="flex items-center justify-center py-12">
-        <div className="mx-auto grid w-[350px] gap-6">
-          <div className="grid gap-2 text-center">
-            <h1 className="text-3xl font-bold">Login</h1>
-            <p className="text-balance text-muted-foreground">
-              Use your Google Account to Login
-            </p>
-          </div>
-          <div className="grid gap-4">
-            <form
-              action={async () => {
-                "use server"
-                await signIn("google")
-              }}
-            >
-              <Button variant="outline" className="w-full">
-                Login with Google
-              </Button>
-            </form>
-            {/* <Button onClick={() => signIn()} variant="outline" className="w-full">
+    <div className="h-screen flex items-center justify-center">
+      <Card className="w-full max-w-sm">
+        <div className="grid p-4">
+          <CardHeader>
+            <CardTitle className="text-2xl">Login</CardTitle>
+            <CardDescription>
+              Login using your Google Account.
+            </CardDescription>
+          </CardHeader>
+
+          <form
+            action={async () => {
+              "use server"
+              await signIn("google")
+            }}
+          >
+            <Button className="w-full">
               Login with Google
-            </Button> */}
-            <Textarea placeholder={JSON.stringify(session, null, 2)} />
-          </div>
+            </Button>
+          </form>
+          <Textarea className="mt-4 min-h-20" placeholder={JSON.stringify(session, null, 2)} />
         </div>
-      </div>
-      <div className="hidden bg-muted lg:block">
-        <Image
-          src="/placeholder.svg"
-          alt="Image"
-          width="1920"
-          height="1080"
-          className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-        />
-      </div>
+      </Card>
     </div>
   )
 }
